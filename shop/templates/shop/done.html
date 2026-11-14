@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="done">
+  <div class="big-emoji">🎉</div>
+  <h1>Sargydyňyz kabul edildi!</h1>
+  <p>Sargyt № {{ order.pk }}. Tiz wagtda {{ order.phone }} belgi boýunça size jaň ederis.</p>
+  <a class="btn" href="{% url 'home' %}">Esasy sahypa</a>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ p.name }}{% endblock %}
+{% block content %}
+<div class="detail">
+  <div class="imgbox big"><img src="{{ p.image.url }}" alt="{{ p.name }}">
+    {% if p.discount %}<span class="badge">-{{ p.discount }}%</span>{% endif %}</div>
+  <div>
+    <small>{{ p.brand }} · {{ p.category.name }}</small>
+    <h1>{{ p.name }}</h1>
+    <div class="price lg">{{ p.price|floatformat:0 }} TMT {% if p.old_price %}<s>{{ p.old_price|floatformat:0 }}</s>{% endif %}</div>
+    <p>{{ p.description }}</p>
+    {% if p.in_stock %}
+    <form method="post" action="{% url 'cart_add' p.pk %}">{% csrf_token %}
+      <b>Ölçeg:</b>
+      <div class="sizes">
+        {% for s in sizes %}<label><input type="radio" name="size" value="{{ s }}" required><span>{{ s }}</span></label>{% endfor %}
+      </div>
+      <label>Sany: <input class="qty" type="number" name="qty" value="1" min="1" max="10"></label>
+      <button class="btn">🛒 Sebede goş</button>
+    </form>
+    {% else %}<p class="msg error">Häzirlikçe ýok.</p>{% endif %}
+  </div>
+</div>
+{% if related %}<h2>Meňzeş önümler</h2>
+<div class="grid">{% for p in related %}{% include "shop/_card.html" %}{% endfor %}</div>{% endif %}
+{% endblock %}

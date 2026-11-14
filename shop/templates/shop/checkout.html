@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Sargyt{% endblock %}
+{% block content %}
+<h2>Sargydy resmileşdirmek</h2>
+<div class="checkout">
+  <form method="post" class="form">{% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn">Sargyt etmek</button>
+  </form>
+  <div class="summary">
+    <h3>Sargydyňyz</h3>
+    {% for i in items %}<p>{{ i.product.name }} ({{ i.size }}) × {{ i.qty }} <b>{{ i.subtotal|floatformat:0 }} TMT</b></p>{% endfor %}
+    <hr><p class="total">Jemi: <b>{{ total|floatformat:0 }} TMT</b></p>
+  </div>
+</div>
+{% endblock %}

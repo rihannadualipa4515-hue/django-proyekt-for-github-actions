@@ -1,0 +1,12 @@
+<a class="card" href="{{ p.get_absolute_url }}">
+  <div class="imgbox">
+    <img src="{{ p.image.url }}" alt="{{ p.name }}" loading="lazy">
+    {% if p.discount %}<span class="badge">-{{ p.discount }}%</span>{% endif %}
+  </div>
+  <div class="info">
+    <small>{{ p.brand }}</small>
+    <h3>{{ p.name }}</h3>
+    <div class="price">{{ p.price|floatformat:0 }} TMT
+      {% if p.old_price %}<s>{{ p.old_price|floatformat:0 }}</s>{% endif %}</div>
+  </div>
+</a>

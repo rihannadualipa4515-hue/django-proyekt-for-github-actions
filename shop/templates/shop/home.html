@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Gelşikli aýakgaplar,<br>amatly bahalar</h1>
+    <p>Sport, klassyk we gyşky aýakgaplaryň iň täze kolleksiýasy. Gapdaly eltip bermek hyzmaty.</p>
+    <a class="btn" href="{% url 'catalog' %}">Katalogy görmek →</a>
+  </div>
+  <div class="hero-art">👟</div>
+</section>
+<div class="perks">
+  <div>🚚 Eltip bermek</div><div>✅ Hil kepilligi</div><div>↩️ Çalyşmak mümkin</div><div>💳 Nagt töleg</div>
+</div>
+<h2>Esasy teklipler</h2>
+<div class="grid">{% for p in featured %}{% include "shop/_card.html" %}{% endfor %}</div>
+<h2>Täze gelenler</h2>
+<div class="grid">{% for p in latest %}{% include "shop/_card.html" %}{% endfor %}</div>
+{% endblock %}

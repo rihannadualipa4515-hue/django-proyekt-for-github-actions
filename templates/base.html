@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Aýakgap dükany{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="top">
+  <div class="wrap bar">
+    <a class="logo" href="{% url 'home' %}">👟 Aýak<span>gap</span></a>
+    <form class="search" action="{% url 'catalog' %}" method="get">
+      <input name="q" placeholder="Aýakgap gözläň..." value="{{ q|default:'' }}">
+      <button>Gözle</button>
+    </form>
+    <a class="cart-link" href="{% url 'cart' %}">🛒 Sebet <b>{{ cart_count }}</b></a>
+  </div>
+  <nav class="wrap nav">
+    <a href="{% url 'catalog' %}">Ählisi</a>
+    {% for c in nav_categories %}<a href="{% url 'category' c.slug %}">{{ c.name }}</a>{% endfor %}
+  </nav>
+</header>
+<main class="wrap">
+  {% for m in messages %}<div class="msg {{ m.tags }}">{{ m }}</div>{% endfor %}
+  {% block content %}{% endblock %}
+</main>
+<footer>
+  <div class="wrap">© 2026 Aýakgap dükany · Aşgabat · Tel: +993 61 00 00 00</div>
+</footer>
+</body>
+</html>

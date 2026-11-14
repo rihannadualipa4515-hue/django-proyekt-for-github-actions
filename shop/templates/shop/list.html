@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{% if category %}{{ category.name }}{% else %}Katalog{% endif %}{% endblock %}
+{% block content %}
+<h2>{% if category %}{{ category.name }}{% else %}Katalog{% endif %}{% if q %} · “{{ q }}”{% endif %}</h2>
+<form method="get" class="sortbar">
+  {% if q %}<input type="hidden" name="q" value="{{ q }}">{% endif %}
+  <span>{{ products|length }} önüm</span>
+  <select name="sort" onchange="this.form.submit()">
+    <option value="">Täzeleri ilki</option>
+    <option value="cheap" {% if sort == 'cheap' %}selected{% endif %}>Arzanlary ilki</option>
+    <option value="expensive" {% if sort == 'expensive' %}selected{% endif %}>Gymmatlary ilki</option>
+  </select>
+</form>
+<div class="grid">{% for p in products %}{% include "shop/_card.html" %}{% empty %}<p>Hiç zat tapylmady.</p>{% endfor %}</div>
+{% endblock %}
