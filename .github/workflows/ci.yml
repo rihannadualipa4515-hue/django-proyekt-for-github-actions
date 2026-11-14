@@ -1,34 +1,42 @@
-name: My first CI
+name: Deploy to WPS
 
-on: push
+on:
+  push:
+    branches: [ "main" ]
 
 jobs:
-  connect:
+  connect-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - name: Install sshpass
         run: |
           sudo apt-get update
           sudo apt-get install -y sshpass
 
-      - name: Connect to VPS
+      - name: Connect and Copy to VPS
         run: |
-          export SSHPASS=${{ secrets.VPS_PASS }}
+          export SSHPASS="ZDTEPMqLXV93"
 
+          # 1. Serwerde barmaly bukja döretmek we birikmäni barlamak
           sshpass -e ssh \
             -o StrictHostKeyChecking=accept-new \
-            -p ${{ secrets.VPS_PORT }} \
-            ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} \
-            "whoami && hostname && uptime && mkdir -p ~/CI-test"
+            -p 22 \
+            root@45.61.176.113 \
+            "mkdir -p ~/CI-test && whoami && uptime"
 
+          # 2. Proýektiňizi serwere göçürmek
           sshpass -e scp \
-            -P ${{ secrets.VPS_PORT }} \
+            -P 22 \
             -r \
             -o StrictHostKeyChecking=accept-new \
-            ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }}:~/CI-test/
+            ./ root@45.61.176.113:~/CI-test/
 
+          # 3. Serwerde faýllaryň barlanandygyny barlamak
           sshpass -e ssh \
-            -p ${{ secrets.VPS_PORT }} \
-            ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }} \
+            -p 22 \
+            root@45.61.176.113 \
             "ls -la ~/CI-test"
