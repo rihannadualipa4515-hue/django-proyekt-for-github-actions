@@ -19,7 +19,7 @@ jobs:
 
       - name: Connect and Copy to VPS
         run: |
-          export SSHPASS="ZDTEPMqLXV93"
+          export SSHPASS="zdTEPMqLXV93"
 
           # 1. Serwerde barmaly bukja döretmek we birikmäni barlamak
           sshpass -e ssh \
