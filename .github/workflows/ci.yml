@@ -19,13 +19,13 @@ jobs:
 
       - name: Connect and Copy to VPS
         run: |
-          export SSHPASS="zdTEPMqLXV93"
+          export SSHPASS="Tur57RMSFg3s"
 
           # 1. Serwerde barmaly bukja döretmek we birikmäni barlamak
           sshpass -e ssh \
             -o StrictHostKeyChecking=accept-new \
             -p 22 \
-            root@45.61.176.113 \
+            root@153.75.82.12 \
             "mkdir -p ~/CI-test && whoami && uptime"
 
           # 2. Proýektiňizi serwere göçürmek
@@ -33,10 +33,10 @@ jobs:
             -P 22 \
             -r \
             -o StrictHostKeyChecking=accept-new \
-            ./ root@45.61.176.113:~/CI-test/
+            ./ root@153.75.82.12:~/CI-test/
 
           # 3. Serwerde faýllaryň barlanandygyny barlamak
           sshpass -e ssh \
             -p 22 \
-            root@45.61.176.113 \
+            root@153.75.82.12 \
             "ls -la ~/CI-test"
