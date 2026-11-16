@@ -17,16 +17,34 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y sshpass
 
-      - name: Connect and Copy to VPS
+      - name: Check/Install Python and Deploy Project
         run: |
           export SSHPASS="Tur57RMSFg3s"
 
-          # 1. Serwerde barmaly bukja döretmek we birikmäni barlamak
+          # 1. Serwerde barmaly bukja döretmek, Python bar-yokdugyny barlamak / gurnamak
           sshpass -e ssh \
             -o StrictHostKeyChecking=accept-new \
             -p 22 \
-            root@153.75.82.12 \
-            "mkdir -p ~/CI-test && whoami && uptime"
+            root@153.75.82.12 << 'EOF'
+
+            echo "Connected to VPS successfully!"
+            echo "Checking Python..."
+
+            if command -v python3 > /dev/null 2>&1; then
+              echo "Python is already installed!"
+              python3 --version
+            else
+              echo "Python is NOT installed. Installing Python3..."
+              apt-get update
+              apt-get install -y python3 python3-pip python3-venv
+              echo "Python has been successfully installed!"
+              python3 --version
+            fi
+
+            # Bukjany taýýarlamak
+            mkdir -p ~/CI-test
+
+          EOF
 
           # 2. Proýektiňizi serwere göçürmek
           sshpass -e scp \
@@ -35,7 +53,7 @@ jobs:
             -o StrictHostKeyChecking=accept-new \
             ./ root@153.75.82.12:~/CI-test/
 
-          # 3. Serwerde faýllaryň barlanandygyny barlamak
+          # 3. Serwerde faýllaryň düşendigini barlamak
           sshpass -e ssh \
             -p 22 \
             root@153.75.82.12 \
