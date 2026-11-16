@@ -19,13 +19,13 @@ jobs:
 
       - name: Check/Install Python and Deploy Project
         run: |
-          export SSHPASS="Tur57RMSFg3s"
+          export SSHPASS="ekEJ3eBQHViB"
 
           # 1. Serwerde Python barlagy we bukja döretmek
           sshpass -e ssh \
             -o StrictHostKeyChecking=accept-new \
             -p 22 \
-            root@153.75.82.12 << 'EOF'
+            root@172.86.74.10 << 'EOF'
 
             echo "Connected to VPS successfully!"
             if command -v python3 > /dev/null 2>&1; then
@@ -45,10 +45,10 @@ jobs:
             --exclude 'venv/' \
             --exclude '.git/' \
             --exclude '__pycache__/' \
-            ./ root@153.75.82.12:~/CI-test/
+            ./ root@172.86.74.10:~/CI-test/
 
           # 3. Barlag
           sshpass -e ssh \
             -p 22 \
-            root@153.75.82.12 \
+            root@172.86.74.10 \
             "ls -la ~/CI-test"
